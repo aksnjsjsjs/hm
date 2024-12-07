@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fetch Api</title>
+    <title>User - Hinata Bot</title>
 </head>
 
 <body>
@@ -14,20 +14,16 @@
     <table border="1">
         <thead>
             <tr>
-                <th>No</th>
                 <th>Nama</th>
+                <th>WhatsApp</th>
                 <th>Status</th>
-                <th>Detail</th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
 
-    <div id="detail"></div>
-
     <script>
         const tbody = document.querySelector('tbody')
-        const detail = document.getElementById('detail')
         const searchForm = document.getElementById('search')
         let usersData = [];
 
@@ -49,40 +45,22 @@
                 <tr>
                     <td>` + (no++) + `</td>
                     <td>${el.user.name}</td>
+                    <td>private</td>
                     <td>${el.user.status}</td>
-                    <td><button onclick='showDetail(${el.id})'>Detail</button></td>
                 </tr>
                 `
             }).join('')
             tbody.innerHTML = output;
         }
 
-
-        function showDetail() {
-            fetch('https://95ejy0tt-8pemrkz4-8z5bt3c13btc.ac4-preview.marscode.dev/user')
-                .then((res) => res.json())
-                .then((data) => {
-                    detail.innerHTML = ''
-                    detail.insertAdjacentHTML('beforeend', `
-                            <ul>
-                                <li>${data.user.name}</li>
-                                <li>${data.user.umur}</li>
-                                <li>${data.user.gender}</li>
-                                <li>private</li>
-                                <li>${data.user.status}</li>
-                            </ul>
-                    `)
-                })
-        }
-
         searchForm.addEventListener('keyup', (e) => {
             const value = e.target.value.toLowerCase();
             const input = usersData.filter((data) => {
                 return (
-                    data.user.name.toLowerCase().includes(value)
+                    data.name.toLowerCase().includes(value)
                 )
             })
-            loadUserData()
+            loadUserData(input)
         })
 
         loadData()
