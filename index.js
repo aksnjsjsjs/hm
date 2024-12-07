@@ -80,7 +80,9 @@ app.get('/verifikasi', async (req, res) => {
 app.get('/user', async (req, res) => {
 	for (let i of user) {
         res.status(200).json({
-            i
+            name: i.name,
+            phone: i.phone,
+            status: i.status
         })
     }
 })
