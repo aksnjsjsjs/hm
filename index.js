@@ -72,6 +72,12 @@ app.get('/verifikasi', async (req, res) => {
     })
 })
 
+app.get('/user', async (req, res) => {
+    res.status(200).json({
+        reg
+    })
+})
+
 //---------------------------------------------------------------------//
 
 async function connectToWhatsApp () {
