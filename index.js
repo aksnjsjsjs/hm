@@ -55,7 +55,6 @@ app.get('/verifikasi', async (req, res) => {
         status = 'waiting for verification'
         message = 'Kode verifikasi berhasil dikirim'
         let obj = {
-	        id: dbx.length + 1
 	        name: name,
 	        umur: umur,
 	        gender: gender,
@@ -65,7 +64,7 @@ app.get('/verifikasi', async (req, res) => {
         user.push(obj)
         fs.writeFileSync('./views/user.json', JSON.stringify(user, null, 2))
     }).catch((err) => {
-    	status = false
+    	status = '404'
         message = 'Error, silahkan kembali ke halaman utama'
     })
     res.status(200).json({
