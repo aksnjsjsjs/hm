@@ -74,6 +74,10 @@ app.get('/verifikasi', async (req, res) => {
     })
 })
 
+app.get('/users', (req, res) => {
+    res.sendFile(__path + '/views/users.html')
+})
+
 app.get('/user', async (req, res) => {
     res.status(200).json({
         user
