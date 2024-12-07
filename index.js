@@ -40,47 +40,47 @@ app.get('/verifikasi', async (req, res) => {
 	let dbx = user.find(i => i.phone === phone)
     if (dbx !== undefined) {
         if (dbx.status === false) {
-		    status = 'waiting for verification',
+		    status = 'waiting for verification'
 		    message = 'Silahkan verifikasi kode yang dikirim oleh bot'
 	        return
         }
         if (dbx.status === true) {
-	        status = true
+		    status = true
 		    message = 'Nomor kamu sudah terverifikasi'
 	        return
         }
     }
-    let pesan = `Kode verifikasi kamu adalah: ${Math.floor(Math.random() * 10000)}`
-	await iya.sendMessage(phone+"@s.whatsapp.net", { text: pesan }).then((respon) => {
-        status = 'waiting for verification'
-        message = 'Kode verifikasi berhasil dikirim'
-        let obj = {
-	        name: name,
-	        umur: umur,
-	        gender: gender,
-	        phone: phone, 
-            status: false
-        }
-        user.push(obj)
-        fs.writeFileSync('./views/user.json', JSON.stringify(user, null, 2))
-    }).catch((err) => {
-    	status = '404'
-        message = 'Error, silahkan kembali ke halaman utama'
-    })
+    if (name && phone) {
+        let pesan = `Kode verifikasi kamu adalah: ${Math.floor(Math.random() * 10000)}`
+	    await iya.sendMessage(phone+"@s.whatsapp.net", { text: pesan }).then((respon) => {
+            status = 'waiting for verification'
+		    message = 'Kode verifikasi berhasil dikirim'
+			let obj = {
+				name: name,
+	            phone: phone,
+			    status: false
+		    }
+		    user.push(obj)
+	        fs.writeFileSync('./views/user.json', JSON.stringify(user, null, 2))
+	    }).catch((err) => {
+		    status = '404'
+	        message = 'Error, silahkan kembali ke halaman utama'
+	    })
+    }
     res.status(200).json({
         status: status,
         message: message
     })
 })
 
-app.get('/users', (req, res) => {
-    res.sendFile(__path + '/views/users.html')
-})
-
 app.get('/user', async (req, res) => {
     res.status(200).json({
         user
     })
+})
+
+app.get('/users', (req, res) => {
+    res.sendFile(__path + '/views/users.html')
 })
 
 //---------------------------------------------------------------------//
