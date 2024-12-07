@@ -58,8 +58,8 @@
         }
 
 
-        function showDetail(id) {
-            fetch('https://95ejy0tt-8pemrkz4-8z5bt3c13btc.ac4-preview.marscode.dev/user' + id)
+        function showDetail() {
+            fetch('https://95ejy0tt-8pemrkz4-8z5bt3c13btc.ac4-preview.marscode.dev/user')
                 .then((res) => res.json())
                 .then((data) => {
                     detail.innerHTML = ''
@@ -79,10 +79,10 @@
             const value = e.target.value.toLowerCase();
             const input = usersData.filter((data) => {
                 return (
-                    data.name.toLowerCase().includes(value)
+                    data.user.name.toLowerCase().includes(value)
                 )
             })
-            loadUserData(input)
+            loadUserData()
         })
 
         loadData()
