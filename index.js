@@ -40,13 +40,17 @@ app.get('/verifikasi', async (req, res) => {
 	let dbx = user.find(i => i.phone === phone)
     if (dbx !== undefined) {
         if (dbx.status === false) {
-		    status = 'waiting for verification'
-		    message = 'Silahkan verifikasi kode yang dikirim oleh bot'
+            res.status(200).json({
+		        status: 'waiting for verification',
+		        message: 'Silahkan verifikasi kode yang dikirim oleh bot'
+	        })
 	        return
         }
         if (dbx.status === true) {
-		    status = true
-		    message = 'Nomor kamu sudah terverifikasi'
+	        res.status(200).json({
+		        status: true,
+		        message: 'Nomor kamu sudah terverifikasi'
+	        })
 	        return
         }
     }
@@ -74,13 +78,11 @@ app.get('/verifikasi', async (req, res) => {
 })
 
 app.get('/user', async (req, res) => {
-    res.status(200).json({
-        user
-    })
-})
-
-app.get('/users', (req, res) => {
-    res.sendFile(__path + '/views/users.html')
+	for (let i of user) {
+        res.status(200).json({
+            i
+        })
+    }
 })
 
 //---------------------------------------------------------------------//
