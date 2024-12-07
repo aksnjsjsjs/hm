@@ -40,36 +40,34 @@ app.get('/verifikasi', async (req, res) => {
 	let dbx = user.find(i => i.phone === phone)
     if (dbx !== undefined) {
         if (dbx.status === false) {
-            res.status(200).json({
-		        status: 'waiting for verification',
-		        message: 'Silahkan verifikasi kode yang dikirim oleh bot'
-	        })
+		    status = 'waiting for verification',
+		    message = 'Silahkan verifikasi kode yang dikirim oleh bot'
 	        return
         }
         if (dbx.status === true) {
-	        res.status(200).json({
-		        status: true,
-		        message: 'Nomor kamu sudah terverifikasi'
-	        })
+	        status = true
+		    message = 'Nomor kamu sudah terverifikasi'
 	        return
         }
     }
-    if (name && phone) {
-        let pesan = `Kode verifikasi kamu adalah: ${Math.floor(Math.random() * 10000)}`
-	    await iya.sendMessage(phone+"@s.whatsapp.net", { text: pesan }).then((respon) => {
-            status = 'waiting for verification'
-		    message = 'Kode verifikasi berhasil dikirim'
-			let obj = {
-				name: name,
-	            phone: phone,
-			    status: false
-		    }
-		    user.push(obj)
-	        fs.writeFileSync('./views/user.json', JSON.stringify(user, null, 2))
-	    }).catch((err) => {
-	        message = 'Error '+err
-	    })
-    }
+    let pesan = `Kode verifikasi kamu adalah: ${Math.floor(Math.random() * 10000)}`
+	await iya.sendMessage(phone+"@s.whatsapp.net", { text: pesan }).then((respon) => {
+        status = 'waiting for verification'
+        message = 'Kode verifikasi berhasil dikirim'
+        let obj = {
+	        id: dbx.length + 1
+	        name: name,
+	        umur: umur,
+	        gender: gender,
+	        phone: phone, 
+            status: false
+        }
+        user.push(obj)
+        fs.writeFileSync('./views/user.json', JSON.stringify(user, null, 2))
+    }).catch((err) => {
+    	status = false
+        message = 'Error, silahkan kembali ke halaman utama'
+    })
     res.status(200).json({
         status: status,
         message: message
