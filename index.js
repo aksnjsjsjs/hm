@@ -3,7 +3,10 @@ const pino = require('pino')
 const { Boom } = require('@hapi/boom')
 const fs = require('fs')
 
+// database
 let user = JSON.parse(fs.readFileSync('./views/user.json'))
+
+// mboh
 let iya = null;
 
 //---------------------------------------------------------------------//
