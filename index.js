@@ -30,6 +30,7 @@ app.get('/verifikasi', async (req, res) => {
     let message = null
     let name = req.query.name
     let phone = req.query.phone
+    let kode = Math.floor(Math.random() * 10000)
 	let dbx = user.find(i => i.phone === phone)
     if (dbx !== undefined) {
         if (dbx.status === false) {
@@ -48,13 +49,14 @@ app.get('/verifikasi', async (req, res) => {
         }
     }
     if (name && phone) {
-        let pesan = `Kode verifikasi kamu adalah: *${Math.floor(Math.random() * 10000)}*\n\nKetik *.verifikasi ${Math.floor(Math.random() * 10000)}* untuk memverifikasi.`
+        let pesan = `Kode verifikasi kamu adalah: *${kode}*\n\nKetik *.verifikasi ${kode}* untuk memverifikasi.`
 	    await iya.sendMessage(phone+"@s.whatsapp.net", { text: pesan }).then((respon) => {
             status = 'waiting for verification'
 		    message = 'Kode verifikasi berhasil dikirim'
 			let obj = {
 				name: name,
 	            phone: phone,
+	            kode: kode,
 			    status: false
 		    }
 		    user.push(obj)
@@ -100,7 +102,11 @@ store.bind(oke.ev)
 iya = oke
 
 oke.ev.on('connection.update', async (update) => {
-    const { connection, lastDisconnect, qr} = update	    
+    const { connection, lastDisconnect, qr} = update
+    // start server
+    app.listen(PORT, () => {
+        console.log("Server running on port " + PORT)
+    })
     if (connection === 'close') {
         let reason = new Boom(lastDisconnect?.error)?.output.statusCode
         if (reason === DisconnectReason.badSession) { console.log(`Bad Session File, Please Delete Session and Scan Again`); oke.logout(); }
@@ -123,8 +129,3 @@ return oke
 }
 
 startRiy()
-
-// start website
-app.listen(PORT, () => {
-    console.log("Server running on port " + PORT)
-})
