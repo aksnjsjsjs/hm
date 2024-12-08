@@ -117,7 +117,7 @@ oke.ev.on('connection.update', async (update) => {
     }
 })
 
-hisoka.ev.on("creds.update", saveCreds)
+oke.ev.on("creds.update", saveCreds)
 
 return oke
 }
