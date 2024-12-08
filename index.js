@@ -85,16 +85,16 @@ const startRiy = async() => {
 	
 const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) })
 const { state, saveCreds } = await useMultiFileAuthState(`./session`)
-const { version, isLatest } = await fetchLatestBaileysVersion()
 
 // start
 const oke = riyConnect({
-    version,
     logger: pino({ level: 'silent' }),
     printQRInTerminal: true,
-    browser: ['Website','Safari','1.0.0'],
+    browser: ['Chrome (Linux)', '', ''],
     auth: state
 })
+
+store.bind(oke.ev)
 
 // mboh
 iya = oke
@@ -114,18 +114,17 @@ oke.ev.on('connection.update', async (update) => {
     }
     if (update.connection == "open" || update.receivedPendingNotifications == "true") {
         console.log('Connect, welcome owner!')
-        console.log(`Connected to = ` + JSON.stringify(oke.user, null, 2))
     }
 })
 
-store.bind(oke.ev)
-
-// start website
-app.listen(PORT, () => {
-    console.log("Server running on port " + PORT)
-})
+hisoka.ev.on("creds.update", saveCreds)
 
 return oke
 }
 
 startRiy()
+
+// start website
+app.listen(PORT, () => {
+    console.log("Server running on port " + PORT)
+})
