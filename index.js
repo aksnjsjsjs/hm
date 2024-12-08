@@ -72,7 +72,7 @@ app.get('/verifikasi', async (req, res) => {
 })
 
 app.get('/userJson', async (req, res) => {
-    res.status(200).json({
+    res.json({
         user
     })
 })
