@@ -65,7 +65,7 @@ app.get('/verifikasi', async (req, res) => {
 	        message = 'Error, silahkan kembali ke halaman utama'
 	    })
     }
-    res.status(200).json({
+    res.json({
         status: status,
         message: message
     })
