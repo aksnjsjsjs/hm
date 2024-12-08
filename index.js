@@ -103,10 +103,6 @@ iya = oke
 
 oke.ev.on('connection.update', async (update) => {
     const { connection, lastDisconnect, qr} = update
-    // start server
-    app.listen(PORT, () => {
-        console.log("Server running on port " + PORT)
-    })
     if (connection === 'close') {
         let reason = new Boom(lastDisconnect?.error)?.output.statusCode
         if (reason === DisconnectReason.badSession) { console.log(`Bad Session File, Please Delete Session and Scan Again`); oke.logout(); }
@@ -120,6 +116,9 @@ oke.ev.on('connection.update', async (update) => {
     }
     if (update.connection == "open" || update.receivedPendingNotifications == "true") {
         console.log('Connect, welcome owner!')
+        app.listen(PORT, () => {
+            console.log("Server running on port " + PORT)
+        })
     }
 })
 
