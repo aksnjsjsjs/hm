@@ -34,14 +34,14 @@ app.get('/verifikasi', async (req, res) => {
 	let dbx = user.find(i => i.phone === phone)
     if (dbx !== undefined) {
         if (dbx.status === false) {
-            res.status(200).json({
+            res.json({
 		        status: 'waiting for verification',
 		        message: 'Silahkan verifikasi kode yang dikirim oleh bot'
 	        })
 	        return
         }
         if (dbx.status === true) {
-	        res.status(200).json({
+	        res.json({
 		        status: true,
 		        message: 'Nomor kamu sudah terverifikasi'
 	        })
