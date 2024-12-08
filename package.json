@@ -1,26 +1,19 @@
 {
-  "name": "y",
+  "name": "oke",
   "version": "1.1.0",
-  "description": "y",
-  "main": "node index.js",
+  "description": "nothing",
+  "main": "node oke.js",
   "scripts": {
-    "start": "node index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Zhirrr/Zhirrr-Api.git"
+    "start": "node oke.js"
   },
   "keywords": [
     "simple",
-    "api",
-    "rest",
+    "bot",
+    "website",
     "api"
   ],
-  "author": "Zhirrr",
+  "author": "riycs",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Zhirrr/Zhirrr-Api/issues"
-  },
   "dependencies": {
     "@whiskeysockets/baileys": "latest",
     "@adiwajshing/keyed-db": "^0.2.4",
@@ -31,5 +24,4 @@
     "urlencode": "^1.1.0",
     "qrcode-terminal": "0.12.0"
   },
-  "homepage": "https://github.com/Zhirrr/Zhirrr-Api#readme"
 }
